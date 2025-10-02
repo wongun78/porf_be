@@ -1,0 +1,16 @@
+
+> nextjs-mongodb-api@1.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.32
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1229ms
+ ✓ Compiled /api/auth/login in 335ms (141 modules)
+ POST /api/auth/login 200 in 1241ms
+ ✓ Compiled /api/coins in 68ms (144 modules)
+ GET /api/coins 200 in 174ms
+ ✓ Compiled /api/portfolio in 40ms (146 modules)
+ GET /api/portfolio 200 in 142ms
