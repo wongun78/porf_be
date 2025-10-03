@@ -14,7 +14,34 @@ export interface User extends BaseDocument {
   password: string; // hashed password
   fullName?: string;
   avatar?: string;
+  bio?: string;
+  phone?: string;
+  address?: string;
+  dateOfBirth?: Date;
+  country?: string;
+  city?: string;
+  profileImage?: string;
+  coverImage?: string;
+  socialLinks?: {
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
+    website?: string;
+  };
+  preferences?: {
+    currency?: string; // USD, VND, EUR, etc.
+    language?: string;
+    theme?: string;
+    notifications?: {
+      email?: boolean;
+      push?: boolean;
+      sms?: boolean;
+    };
+  };
+  role?: string;
   isActive?: boolean;
+  isVerified?: boolean;
+  lastLoginAt?: Date;
 }
 
 // User input for registration/profile updates (without password hash)
@@ -24,6 +51,31 @@ export interface UserInput {
   password: string; // plain password for registration
   fullName?: string;
   avatar?: string;
+  bio?: string;
+  phone?: string;
+  address?: string;
+  dateOfBirth?: Date;
+  country?: string;
+  city?: string;
+  profileImage?: string;
+  coverImage?: string;
+  socialLinks?: {
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
+    website?: string;
+  };
+  preferences?: {
+    currency?: string;
+    language?: string;
+    theme?: string;
+    notifications?: {
+      email?: boolean;
+      push?: boolean;
+      sms?: boolean;
+    };
+  };
+  role?: string;
 }
 
 // User response (without password)
@@ -33,7 +85,34 @@ export interface UserResponse {
   username: string;
   fullName?: string;
   avatar?: string;
+  bio?: string;
+  phone?: string;
+  address?: string;
+  dateOfBirth?: Date;
+  country?: string;
+  city?: string;
+  profileImage?: string;
+  coverImage?: string;
+  socialLinks?: {
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
+    website?: string;
+  };
+  preferences?: {
+    currency?: string;
+    language?: string;
+    theme?: string;
+    notifications?: {
+      email?: boolean;
+      push?: boolean;
+      sms?: boolean;
+    };
+  };
+  role?: string;
   isActive?: boolean;
+  isVerified?: boolean;
+  lastLoginAt?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -54,6 +133,34 @@ export interface Coin extends BaseDocument {
   purchaseDate: Date; // Date when first purchased
   lastPriceUpdate?: Date; // Last time price was updated
   isActive: boolean; // Whether still tracking this coin
+  
+  // New fields for enhanced coin information
+  logo?: string; // URL to coin logo/image
+  coinGeckoId?: string; // CoinGecko API ID for price fetching
+  marketCap?: number; // Current market capitalization
+  rank?: number; // Market cap rank
+  volume24h?: number; // 24h trading volume
+  priceChange24h?: number; // 24h price change percentage
+  priceChange7d?: number; // 7d price change percentage
+  allTimeHigh?: number; // All-time high price
+  allTimeLow?: number; // All-time low price
+  circulatingSupply?: number; // Circulating supply
+  totalSupply?: number; // Total supply
+  maxSupply?: number; // Maximum supply
+  website?: string; // Official website
+  whitepaper?: string; // Whitepaper URL
+  explorer?: string; // Blockchain explorer URL
+  github?: string; // GitHub repository
+  category?: string; // Coin category (DeFi, Layer 1, etc.)
+  tags?: string[]; // Tags for categorization
+  description?: string; // Coin description
+  riskLevel?: 'LOW' | 'MEDIUM' | 'HIGH' | 'VERY_HIGH'; // Investment risk level
+  investmentGoal?: 'SHORT_TERM' | 'MEDIUM_TERM' | 'LONG_TERM'; // Investment timeline
+  alertSettings?: {
+    priceTargetHigh?: number; // Alert when price goes above
+    priceTargetLow?: number; // Alert when price goes below
+    percentageChangeAlert?: number; // Alert on % change
+  };
 }
 
 // Coin input for creating/updating
@@ -66,6 +173,19 @@ export interface CoinInput {
   note?: string;
   purchaseDate: Date;
   isActive?: boolean;
+  logo?: string;
+  coinGeckoId?: string;
+  website?: string;
+  category?: string;
+  tags?: string[];
+  description?: string;
+  riskLevel?: 'LOW' | 'MEDIUM' | 'HIGH' | 'VERY_HIGH';
+  investmentGoal?: 'SHORT_TERM' | 'MEDIUM_TERM' | 'LONG_TERM';
+  alertSettings?: {
+    priceTargetHigh?: number;
+    priceTargetLow?: number;
+    percentageChangeAlert?: number;
+  };
 }
 
 // Transaction interface for buy/sell history

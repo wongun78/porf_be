@@ -43,7 +43,23 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { username, email, password, fullName, bio, role = "user" } = body;
+    const { 
+      username, 
+      email, 
+      password, 
+      fullName, 
+      bio, 
+      phone,
+      address,
+      dateOfBirth,
+      country,
+      city,
+      profileImage,
+      coverImage,
+      socialLinks,
+      preferences,
+      role = "user" 
+    } = body;
 
     // Validation
     if (!username || !email || !password) {
@@ -91,7 +107,28 @@ export async function POST(request: NextRequest) {
       password: hashedPassword,
       fullName: fullName || "",
       bio: bio || "",
+      phone: phone || "",
+      address: address || "",
+      dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+      country: country || "",
+      city: city || "",
+      profileImage: profileImage || "",
+      coverImage: coverImage || "",
+      socialLinks: socialLinks || {},
+      preferences: preferences || {
+        currency: "USD",
+        language: "en",
+        theme: "dark",
+        notifications: {
+          email: true,
+          push: true,
+          sms: false
+        }
+      },
       role,
+      isActive: true,
+      isVerified: false,
+      lastLoginAt: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };

@@ -106,7 +106,18 @@ export async function PUT(
     if (body.username) updateData.username = body.username;
     if (body.fullName !== undefined) updateData.fullName = body.fullName;
     if (body.bio !== undefined) updateData.bio = body.bio;
+    if (body.phone !== undefined) updateData.phone = body.phone;
+    if (body.address !== undefined) updateData.address = body.address;
+    if (body.dateOfBirth !== undefined) updateData.dateOfBirth = body.dateOfBirth ? new Date(body.dateOfBirth) : null;
+    if (body.country !== undefined) updateData.country = body.country;
+    if (body.city !== undefined) updateData.city = body.city;
+    if (body.profileImage !== undefined) updateData.profileImage = body.profileImage;
+    if (body.coverImage !== undefined) updateData.coverImage = body.coverImage;
+    if (body.socialLinks !== undefined) updateData.socialLinks = body.socialLinks;
+    if (body.preferences !== undefined) updateData.preferences = body.preferences;
     if (body.role) updateData.role = body.role;
+    if (body.isActive !== undefined) updateData.isActive = body.isActive;
+    if (body.isVerified !== undefined) updateData.isVerified = body.isVerified;
 
     // Hash new password if provided
     if (body.password) {
@@ -152,7 +163,7 @@ export async function PUT(
       }
     );
 
-    if (!result || !result.value) {
+    if (!result) {
       const response: ApiResponse<null> = {
         success: false,
         data: null,
@@ -163,7 +174,7 @@ export async function PUT(
 
     const response: ApiResponse<any> = {
       success: true,
-      data: result.value,
+      data: result,
       message: "User updated successfully",
     };
 

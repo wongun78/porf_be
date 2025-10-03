@@ -1,8 +1,8 @@
-// File: D:\github_repository\porf_be\src\app\api\users\[id]\route.ts
-import * as entry from '../../../../../../src/app/api/users/[id]/route.js'
+// File: D:\github_repository\porf_be\src\app\api\coins\route.ts
+import * as entry from '../../../../../src/app/api/coins/route.js'
 import type { NextRequest } from 'next/server.js'
 
-type TEntry = typeof import('../../../../../../src/app/api/users/[id]/route.js')
+type TEntry = typeof import('../../../../../src/app/api/coins/route.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{

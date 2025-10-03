@@ -158,6 +158,17 @@ export async function PUT(
     if (body.purchaseDate)
       updateData.purchaseDate = new Date(body.purchaseDate);
     if (body.isActive !== undefined) updateData.isActive = body.isActive;
+    
+    // Update new fields
+    if (body.logo !== undefined) updateData.logo = body.logo;
+    if (body.coinGeckoId !== undefined) updateData.coinGeckoId = body.coinGeckoId;
+    if (body.website !== undefined) updateData.website = body.website;
+    if (body.category !== undefined) updateData.category = body.category;
+    if (body.tags !== undefined) updateData.tags = body.tags;
+    if (body.description !== undefined) updateData.description = body.description;
+    if (body.riskLevel !== undefined) updateData.riskLevel = body.riskLevel;
+    if (body.investmentGoal !== undefined) updateData.investmentGoal = body.investmentGoal;
+    if (body.alertSettings !== undefined) updateData.alertSettings = body.alertSettings;
 
     // Recalculate total invested if quantity or average price changed
     if (body.quantity !== undefined || body.averageBuyPrice !== undefined) {
