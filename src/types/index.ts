@@ -239,6 +239,18 @@ export interface AuthResponse {
   token: string;
 }
 
+// Pagination metadata interface
+export interface PaginationMeta {
+  current: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  nextPage: number | null;
+  prevPage: number | null;
+}
+
 // API Response wrapper
 export interface ApiResponse<T = any> {
   success: boolean;
@@ -246,6 +258,7 @@ export interface ApiResponse<T = any> {
   error?: string;
   message?: string;
   total?: number;
+  pagination?: PaginationMeta;
 }
 
 // Pagination parameters

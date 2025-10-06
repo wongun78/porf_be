@@ -9,22 +9,71 @@ export async function OPTIONS() {
   return handleCorsOptions();
 }
 
-// GET - Get all users
+// GET - Get all users with pagination
 export async function GET(request: NextRequest) {
   try {
     const client = await clientPromise;
     const db = client.db("hocdanit");
 
+    // Get query parameters
+    const url = new URL(request.url);
+    const current = parseInt(url.searchParams.get("current") || "1");
+    const pageSize = parseInt(url.searchParams.get("pageSize") || "10");
+    const search = url.searchParams.get("search") || "";
+    const sort = url.searchParams.get("sort") || "createdAt";
+    const order = url.searchParams.get("order") || "desc";
+
+    // Validate pagination parameters
+    const page = Math.max(1, current);
+    const limit = Math.min(Math.max(1, pageSize), 100); // Max 100 items per page
+    const skip = (page - 1) * limit;
+
+    // Build search query
+    const searchQuery: any = {};
+    if (search) {
+      searchQuery.$or = [
+        { username: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+        { fullName: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    // Build sort object
+    const sortObj: any = {};
+    sortObj[sort] = order === "asc" ? 1 : -1;
+
+    // Get total count for pagination
+    const totalUsers = await db.collection("users").countDocuments(searchQuery);
+
+    // Get users with pagination
     const users = await db
       .collection("users")
-      .find({}, { projection: { password: 0 } })
-      .sort({ createdAt: -1 })
+      .find(searchQuery, { projection: { password: 0 } })
+      .sort(sortObj)
+      .skip(skip)
+      .limit(limit)
       .toArray();
+
+    // Calculate pagination metadata
+    const totalPages = Math.ceil(totalUsers / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
 
     const response: ApiResponse<any[]> = {
       success: true,
       data: users,
       message: "Users retrieved successfully",
+      total: totalUsers,
+      pagination: {
+        current: page,
+        pageSize: limit,
+        total: totalUsers,
+        totalPages,
+        hasNextPage,
+        hasPrevPage,
+        nextPage: hasNextPage ? page + 1 : null,
+        prevPage: hasPrevPage ? page - 1 : null,
+      },
     };
 
     return corsResponse(NextResponse.json(response));
